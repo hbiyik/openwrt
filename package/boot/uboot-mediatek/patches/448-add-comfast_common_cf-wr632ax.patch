@@ -1,6 +1,44 @@
 --- /dev/null
 +++ b/arch/arm/dts/mt7981-comfast-cf-wr632ax.dts
-@@ -0,0 +1,153 @@
+@@ -0,0 +1,35 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++
++/dts-v1/;
++#include "mt7981-comfast-common.dtsi"
++
++/ {
++	model = "COMFAST CF-WR632AX";
++	compatible = "mediatek,mt7981", "mediatek,mt7981-rfb";
++};
++
++&led_status_blue {
++	gpios = <&pio 8 GPIO_ACTIVE_LOW>;
++};
++
++&led_status_green {
++	gpios = <&pio 35 GPIO_ACTIVE_LOW>;
++};
++
++&led_status_red {
++	gpios = <&pio 34 GPIO_ACTIVE_LOW>;
++};
++
++
++&eth {
++	mediatek,gmac-id = <1>;
++	phy-handle = <&phy0>;
++
++	mdio {
++		phy0: ethernet-phy@0 {
++			compatible = "ethernet-phy-id03a2.9461";
++			reg = <0x0>;
++			phy-mode = "gmii";
++		};
++	};
++};
+--- /dev/null
++++ b/arch/arm/dts/mt7981-comfast-common.dtsi
+@@ -0,0 +1,138 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later
 +
 +/dts-v1/;
@@ -11,8 +49,6 @@
 +/ {
 +	#address-cells = <1>;
 +	#size-cells = <1>;
-+	model = "COMFAST CF-WR632AX";
-+	compatible = "mediatek,mt7981", "mediatek,mt7981-rfb";
 +
 +	chosen {
 +		stdout-path = &uart0;
@@ -39,19 +75,16 @@
 +
 +		led_status_blue: led-0 {
 +			label = "blue:status";
-+			gpios = <&pio 8 GPIO_ACTIVE_LOW>;
 +			default-state = "off";
 +		};
 +
 +		led_status_green: led-1 {
 +			label = "green:status";
-+			gpios = <&pio 35 GPIO_ACTIVE_LOW>;
 +			default-state = "off";
 +		};
 +
 +		led_status_red: led-2 {
 +			label = "red:status";
-+			gpios = <&pio 34 GPIO_ACTIVE_LOW>;
 +			default-state = "on";
 +		};
 +	};
@@ -59,17 +92,7 @@
 +
 +&eth {
 +	status = "okay";
-+	mediatek,gmac-id = <1>;
 +	phy-mode = "gmii";
-+	phy-handle = <&phy0>;
-+
-+	mdio {
-+		phy0: ethernet-phy@0 {
-+			compatible = "ethernet-phy-id03a2.9461";
-+			reg = <0x0>;
-+			phy-mode = "gmii";
-+		};
-+	};
 +};
 +
 +&pio {
